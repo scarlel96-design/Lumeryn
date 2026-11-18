@@ -21,6 +21,13 @@ class DocLinkTests(unittest.TestCase):
             (root / "README.md").write_text("[broken](docs/not-found.md)", encoding="utf-8")
             self.assertTrue(check_links(root))
 
+    def test_existing_directory_link(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "docs").mkdir()
+            (root / "README.md").write_text("[docs](docs/)", encoding="utf-8")
+            self.assertEqual(check_links(root), [])
+
     def test_external_link_is_skipped(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

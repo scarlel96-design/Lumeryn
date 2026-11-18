@@ -31,7 +31,7 @@ def check_links(root: Path) -> list[str]:
             target = (page.parent / pathpart).resolve()
             if not target.is_relative_to(root.resolve()):
                 errors.append(f"{page.relative_to(root)}: link escapes repository: {raw}")
-            elif not target.is_file():
+            elif not target.exists():
                 errors.append(f"{page.relative_to(root)}: missing target: {raw}")
     return errors
 
