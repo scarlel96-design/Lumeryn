@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lumeryn agent handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "wo_id",
+    "agent",
+    "status",
+    "master_sha256",
+    "commands_executed",
+    "files_changed",
+    "tests",
+    "blockers",
+    "ready_for_review"
+  ],
+  "properties": {
+    "wo_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent": {
+      "enum": [
+        "codex",
+        "grok",
+        "antigravity"
+      ]
+    },
+    "status": {
+      "enum": [
+        "COMPLETED",
+        "BLOCKED",
+        "HOLD",
+        "FAILED",
+        "NOT_RUN"
+      ]
+    },
+    "master_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "worktree": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "base_commit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "result_commit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "commands_executed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "command",
+          "exit_code"
+        ],
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "log_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "SKIP",
+              "NOT_RUN",
+              "BLOCKED"
+            ]
+          },
+          "evidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "input_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "wall_clock_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "ready_for_review": {
+      "type": "boolean"
+    }
+  }
+}

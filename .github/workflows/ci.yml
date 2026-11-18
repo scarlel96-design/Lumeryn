@@ -1,0 +1,26 @@
+name: Foundation checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-and-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify mandatory project documents
+        run: python scripts/verify_project.py check --wo WO-AGENT-00
+      - name: Compile Python files
+        run: python -m compileall -q src scripts tests
+      - name: Run unit tests (no external services)
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
