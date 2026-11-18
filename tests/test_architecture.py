@@ -1,4 +1,4 @@
-"""Architecture contract tests; no optional runtime packages needed."""
+"""Offline Clean Architecture and import-cycle tests."""
 from __future__ import annotations
 
 import sys
@@ -28,6 +28,29 @@ class ArchitectureTests(unittest.TestCase):
             path.mkdir(parents=True)
             (path / "bad.py").write_text("from lumeryn.infrastructure import anything\n", encoding="utf-8")
             self.assertTrue(any("infrastructure" in x for x in scan(Path(temp))))
+
+    def test_relative_dependency_is_checked(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / "src/lumeryn/application"
+            path.mkdir(parents=True)
+            (path / "worker.py").write_text(
+                "from ..infrastructure.network import adapter\n", encoding="utf-8"
+            )
+            self.assertTrue(any("infrastructure" in x for x in scan(root)))
+
+    def test_import_cycle_is_detected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            path = root / "src/lumeryn/domain"
+            path.mkdir(parents=True)
+            (path / "a.py").write_text(
+                "from lumeryn.domain.b import helper\n", encoding="utf-8"
+            )
+            (path / "b.py").write_text(
+                "from lumeryn.domain.a import helper\n", encoding="utf-8"
+            )
+            self.assertTrue(any("Import cycle" in x for x in scan(root)))
 
 
 if __name__ == "__main__":
