@@ -95,3 +95,14 @@
 - 기본 브랜치: `main`
 - 초기 GitHub 상태: README만 존재. 설계서와 스캐폴드를 최초로 추가하는 단계.
 - 이 기록은 실제 세 CLI의 실행 성공을 뜻하지 않는다.
+
+
+## 11. GitHub 초기 커밋 및 검증 (2026-11-18)
+
+- GitHub 저장소: https://github.com/scarlel96-design/Lumeryn
+- 설계·초기 골격 반영 커밋: `d48400a54338acf485cc4a918c9b0c3405cce0de`
+- 반영 범위: 마스터 설계, AGENTS, 첫 WO, AI별 지시서, Python 계약 골격, 문서 검사·테스트·GitHub Actions.
+- GitHub Actions Foundation checks: **PASS** — https://github.com/scarlel96-design/Lumeryn/actions/runs/44221424259
+- 첫 작업 이슈: https://github.com/scarlel96-design/Lumeryn/issues/1
+- **중요:** CI PASS는 문서 검사·계약 단위 테스트에 한정된다. 실제 Codex/Grok/Antigravity CLI 연결과 Qwen 추론은 **NOT_RUN**.
+- 다음 조치: 사용자 PC에서 WO-AGENT-00을 실행하고 실제 실행 결과를 기록한다.
