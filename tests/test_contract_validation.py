@@ -34,6 +34,19 @@ class ContractValidationTests(unittest.TestCase):
             file.write_text(json.dumps(data), encoding="utf-8")
             return validate(ROOT, kind, file)
 
+    def test_model_and_policy_examples(self):
+        for kind, path in (
+            ("model", "configs/models/qwen35-4b-proposed.json"),
+            ("policy", "configs/policies/example-search-review.json"),
+        ):
+            with self.subTest(kind=kind):
+                self.assertEqual(validate(ROOT, kind, ROOT / path), [])
+
+    def test_stable_model_requires_real_hash(self):
+        model = json.loads((ROOT / "configs/models/qwen35-4b-proposed.json").read_text())
+        model["role"] = "STABLE"
+        self.assertTrue(self.validate_data("model", model))
+
     def test_example_module_manifest(self):
         file = ROOT / "plugins/examples/math-tool/manifest.json"
         self.assertEqual(validate(ROOT, "module", file), [])

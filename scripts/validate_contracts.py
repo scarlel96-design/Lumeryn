@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMAS = {
     "handoff": "schemas/agent-handoff.schema.json",
     "module": "schemas/module-manifest.schema.json",
+    "model": "schemas/model-manifest.schema.json",
+    "policy": "schemas/policy-rule.schema.json",
 }
 
 

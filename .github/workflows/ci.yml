@@ -35,6 +35,12 @@ jobs:
         run: python scripts/check_architecture.py
       - name: Verify module example manifest
         run: python scripts/validate_contracts.py module plugins/examples/math-tool/manifest.json
+      - name: Verify proposed model manifest
+        run: python scripts/validate_contracts.py model configs/models/qwen35-4b-proposed.json
+      - name: Verify disabled policy example
+        run: python scripts/validate_contracts.py policy configs/policies/example-search-review.json
+      - name: Check internal Markdown file links
+        run: python scripts/check_docs_links.py
       - name: Compile source and test files
         run: python -m compileall -q src scripts tests
       - name: Run offline unit tests
