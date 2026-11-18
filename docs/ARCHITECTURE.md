@@ -43,3 +43,5 @@ Modify contracts only with compatibility tests and an ADR. Update the Work Order
 - `schemas/module-manifest.schema.json` defines optional-module metadata but **does not** load plugins.
 - `schemas/agent-handoff.schema.json` defines standardized worker reports. Commit/logs still need independent checking.
 - See [Module contracts](MODULE_CONTRACTS.md), [Security model](SECURITY_MODEL.md), [Data governance](DATA_GOVERNANCE.md), and [ADR-0002](DECISIONS/ADR-0002-foundation-hardening.md).
+
+[모델·정책 버전형 메타데이터 계약](MODEL_AND_POLICY_CONTRACTS.md) 및 [실기 UI 수락 기준](UI_SPEC.md)도 참조한다.

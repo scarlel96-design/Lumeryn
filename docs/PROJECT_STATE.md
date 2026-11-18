@@ -118,3 +118,9 @@
 - 프로그램의 실제 검색, 이미지 분석, 학습, UI는 여전히 **NOT_RUN / NOT_IMPLEMENTED**.
 - GitHub CI 검증 및 병합 결과는 변경 커밋의 Checks를 기준으로 별도 확인한다.
 - 다음 실제 실행: WO-AGENT-00 (M0) 시작. 완료 전 WO-AGENT-01 수행 금지.
+
+## 13. 보강 검토 보고서
+
+- 리뷰: [FOUNDATION_REVIEW_2026-11-18.md](FOUNDATION_REVIEW_2026-11-18.md)
+- 현재 보강 브랜치는 PR #2에서 검증 중이다. 완료 상태는 검증 결과와 병합 후 확정한다.
+- WO-AGENT-00은 실제 PC에서 아직 실행하지 않았다.

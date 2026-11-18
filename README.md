@@ -78,3 +78,5 @@ py -3.12 -m unittest discover -s tests -v
 - [차기 Dispatcher WO 초안](docs/WORK_ORDERS/WO-AGENT-01.md)
 
 정적 계약·메타데이터 검증은 실제 AI 기능 구현 또는 모델 학습이 아니다.
+
+[기초 설계·코드 점검 및 보강 보고서](docs/FOUNDATION_REVIEW_2026-11-18.md)

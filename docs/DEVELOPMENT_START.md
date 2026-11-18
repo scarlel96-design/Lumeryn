@@ -59,3 +59,5 @@ To capture a **read-only** local hardware/tool availability inventory:
 This does **not** log in, install programs, run Qwen, or prove that Grok/Antigravity/Codex can perform delegated tasks. Actual CLI verification belongs to WO-AGENT-00.
 
 Further documents: `docs/OPERATIONS_AND_STATE.md`, `docs/SECURITY_MODEL.md`, `docs/MODULE_CONTRACTS.md`, `docs/DATA_GOVERNANCE.md`.
+
+관련 보강 검토: [FOUNDATION_REVIEW_2026-11-18.md](FOUNDATION_REVIEW_2026-11-18.md).
