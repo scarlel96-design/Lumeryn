@@ -81,3 +81,15 @@
 5. 사용자에게 변경 파일·검증 결과·미실시 항목·다음 선행조건을 보고한다.
 
 **이 규칙과 충돌하는 개별 WO는 즉시 HOLD하고 Codex의 설계 조정을 요청한다.**
+## 7. v1.1 장기 유지보수와 자동 품질 게이트
+
+- 새 WO에서 시작할 때 `docs/OPERATIONS_AND_STATE.md`의 선행조건·인계 규칙을 참조한다.
+- 검색·모델·정책·모듈의 신뢰 경계는 `docs/SECURITY_MODEL.md`를 확인한다.
+- 개인·검색·학습·평가 데이터는 `docs/DATA_GOVERNANCE.md`의 분리 원칙을 적용한다.
+- 전문 모듈은 `docs/MODULE_CONTRACTS.md`와 버전형 매니페스트를 사용한다.
+- `python scripts/check_architecture.py`를 실행해 import 금지 경계를 확인한다.
+- 관련 JSON 산출물은 `python scripts/validate_contracts.py`로 형식과 현재 마스터 해시를 검사한다.
+- AI 보고서의 PASS, GitHub CI PASS, 실제 사용자 PC 시험 PASS는 서로 다른 검증 결과다.
+- 리뷰 전에 PR 템플릿의 실측·미실시·리스크 항목을 작성한다.
+- 보조 작업이 읽기 전용이어도 시작 전 설계서 전체 열람·상태 확인·시작 보고 의무는 같다.
+- 더 빠른 작업을 위해 검증 단계를 생략하거나 완료 상태를 추정하지 않는다.

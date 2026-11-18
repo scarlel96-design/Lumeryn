@@ -39,3 +39,23 @@ No model weights, trained LoRA, search adapter, browser service or desktop GUI i
 ## Branch strategy
 
 Keep `main` as the integration branch. Codex creates short-lived `agent/<provider>-<wo>` branches for independent tasks. Workers must not commit directly to `main`.
+
+## v1.1 foundation checks
+
+```powershell
+py -3.12 -m pip install -e ".[dev]"
+.\scripts\start_wo.ps1 -WorkOrder WO-AGENT-00
+py -3.12 scripts/check_architecture.py
+py -3.12 scripts/validate_contracts.py module plugins/examples/math-tool/manifest.json
+py -3.12 -m unittest discover -s tests -p "test_*.py" -v
+```
+
+To capture a **read-only** local hardware/tool availability inventory:
+
+```powershell
+.\scripts\inventory_windows.ps1
+```
+
+This does **not** log in, install programs, run Qwen, or prove that Grok/Antigravity/Codex can perform delegated tasks. Actual CLI verification belongs to WO-AGENT-00.
+
+Further documents: `docs/OPERATIONS_AND_STATE.md`, `docs/SECURITY_MODEL.md`, `docs/MODULE_CONTRACTS.md`, `docs/DATA_GOVERNANCE.md`.

@@ -1,7 +1,7 @@
 # Lumeryn 통합 마스터 설계서
 
 > 문서 ID: SA-MASTER-001  
-> 판본: **1.0.0 (최초 설계 기준)**  
+> 판본: **1.1.0 (개발 기반 보강)**  
 > 기준일: **2026-11-18 (Asia/Seoul)**  
 > 문서 상태: **설계안 / 구현 미완료**  
 > 책임자: **사용자 = 제품 요구사항 및 주요 결정 승인 / Codex = 개발 총괄**  
@@ -32,6 +32,7 @@
 21. 초기 환경·프로토타입 전환 계획
 22. 기술적 위험·열린 결정·검증 필요 사항
 23. 공식 참고 자료
+24. 장기 운영·데이터·보안·모듈 계약 강화
 
 ---
 
@@ -653,3 +654,60 @@ Chat, Research Explorer, Model Studio, Policy Studio, Module Manager, Training L
 - Antigravity Rules: https://antigravity.google/docs/rules/
 
 **문서 유지 지침**: 장기 개발 중 새로운 결정은 이 문서를 조용히 덮어쓰지 않는다. ADR 번호와 변경 사유, 영향 받는 WO, 검증 방법을 기록하고 버전을 올린다.
+## 24. 장기 운영·데이터·보안·모듈 계약 강화 (v1.1.0)
+
+### 24.1 설계와 개발의 단계 분리
+
+- 초기 골격의 Python Domain 및 Ports는 실제 검색·AI 모델 실행 기능을 제공하지 않는다.
+- CI에서 문서 검사·계약 테스트를 통과해도 사용자 PC의 CLI 로그인, Win11 Snap, Qwen 모델/비전 추론, GPU 학습을 검증한 것으로 간주하지 않는다.
+- `main`의 실제 기능과 마스터의 미래 계획을 명확히 구분한다.
+- 실험적 모델, 어댑터, 수집 문서, 개인 데이터, 토큰은 Git에 넣지 않는다.
+
+### 24.2 아키텍처 품질 게이트
+
+- `scripts/check_architecture.py`는 Domain/Application의 프레임워크 및 Infrastructure import를 검사한다.
+- 정적 import 검사는 순환 의존성 전체나 동적 import/런타임 권한을 검증하지 못한다. 추가 테스트와 코드 리뷰가 필요하다.
+- 공개 계약은 JSON Schema, Python Protocol 또는 정식 ADR로 정의하고 호환성 시험을 추가한다.
+- Module SDK 실행기·동적 LoRA 전환은 검증된 호환성 계약이 확정되기 전에는 활성화하지 않는다.
+
+### 24.3 데이터·근거 정책
+
+- `docs/DATA_GOVERNANCE.md`를 기준으로 사용자 대화, 검색 원문, 학습 후보, 승인된 학습 데이터, 평가 데이터 및 모델 산출물을 분리한다.
+- 개인 대화 내용을 사용자 승인 없이 학습 데이터에 넣지 않는다.
+- 출처 URL, 원문 해시, 이용권한, 검증 상태, 수집일과 발행일을 분리한다.
+- 정확도 및 성능 비교는 자료·날짜·모델·검색 도구·정답 데이터의 버전을 기록한다.
+
+### 24.4 보안·플러그인 신뢰 경계
+
+- `docs/SECURITY_MODEL.md`의 위협 목록을 구현 WO에 연동한다.
+- 검색 결과·이미지·PDF·도구 출력은 외부 비신뢰 입력이다.
+- 사용자가 편집하는 안전·거부 정책과 실제 파일/명령/네트워크 권한은 별개이다.
+- 초기 모듈 JSON Schema는 **메타데이터 검사**다. 실제 플러그인 코드를 안전하게 실행하는 기능이 아니다.
+- 승인 없는 고위험 작업과 권한 검사 실패 시 도구 실행을 중단한다.
+
+### 24.5 장기 작업 시작 및 완료 기준
+
+- 모든 작업과 새 세션에서 `AGENTS.md`·마스터 전체·`PROJECT_STATE.md`·현재 WO를 확인한다.
+- 문서의 존재·해시가 맞더라도 AI가 읽고 이해했는지는 별도의 시작 보고에서 확인해야 한다.
+- `scripts/validate_contracts.py`로 에이전트 인계 JSON과 모듈 매니페스트를 검증한다.
+- 실제 명령과 종료코드·테스트·Git 변경 증거 없이 WO를 COMPLETED로 변경하지 않는다.
+- GitHub PR에 미실행 테스트와 위험을 남기고, 필요 시 HOLD를 유지한다.
+- `docs/OPERATIONS_AND_STATE.md` 및 ADR-0002를 운영 규약으로 참조한다.
+
+### 24.6 Windows·Linux CI와 미해결 검증
+
+- Python 3.12 기준 Windows·Linux의 기초 계약·단위 테스트를 실행한다.
+- Qt GUI 및 Windows 11 실제 표시·키보드·DPI·Snap·애니메이션은 해당 WO에서 별도로 시험한다.
+- 모델/CLI 관련 비밀정보는 CI에 추가하지 않는다. CI의 테스트 범위를 제품 실사용 검증으로 확대 해석하지 않는다.
+- 주요 개발 단계가 완료되면 해당 기준선에서 회귀 검사를 재실행한다.
+
+### 24.7 이번 보강 관련 운영 문서
+
+- `docs/SECURITY_MODEL.md`
+- `docs/DATA_GOVERNANCE.md`
+- `docs/MODULE_CONTRACTS.md`
+- `docs/OPERATIONS_AND_STATE.md`
+- `docs/DECISIONS/ADR-0002-foundation-hardening.md`
+- `docs/WORK_ORDERS/WO-AGENT-01.md` (DRAFT: WO-AGENT-00 GO 전 착수 금지)
+
+**문서 버전 규칙:** 결정의 변경은 ADR과 영향을 받는 WO, 검증 방법을 포함해 기록한다. `PROJECT_STATE.md`는 실제 완료 상태의 단일 기준이다.

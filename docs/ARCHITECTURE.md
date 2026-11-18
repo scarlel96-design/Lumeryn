@@ -36,3 +36,10 @@ Windows 11 native minimize, maximize, close and Snap behavior stay native. Qt Qu
 ## Change discipline
 
 Modify contracts only with compatibility tests and an ADR. Update the Work Order index and state for every approved change.
+
+## Foundation quality gates
+
+- `scripts/check_architecture.py` statically checks forbidden Domain/Application imports. It cannot prove runtime isolation.
+- `schemas/module-manifest.schema.json` defines optional-module metadata but **does not** load plugins.
+- `schemas/agent-handoff.schema.json` defines standardized worker reports. Commit/logs still need independent checking.
+- See [Module contracts](MODULE_CONTRACTS.md), [Security model](SECURITY_MODEL.md), [Data governance](DATA_GOVERNANCE.md), and [ADR-0002](DECISIONS/ADR-0002-foundation-hardening.md).

@@ -243,3 +243,10 @@ Next WO: WO-AGENT-01 only after authorization
 ```
 
 **이 WO가 완료되어도 `WO-AGENT-01`을 자동 실행하지 않는다.** 먼저 테스트 근거와 수정된 `PROJECT_STATE.md`를 확인한다.
+## 13. v1.1 정밀 점검 추가 사항
+
+- 로컬 실행 전 `scripts/verify_project.py check`로 문서·WO를 확인한다.
+- `scripts/check_architecture.py`의 기본 검사 결과를 기록한다.
+- 보조 에이전트가 JSON 보고서를 제공하면 `scripts/validate_contracts.py handoff`로 검증한다.
+- `scripts/inventory_windows.ps1`은 OS·도구 가용성 점검용이다. CLI 로그인 성공 증거가 아니다.
+- 정적 CI가 PASS여도 본 WO는 **READY** 상태를 유지한다. 실제 사용자 PC에서 별도 권한·작업 격리 테스트를 완료해야 한다.
