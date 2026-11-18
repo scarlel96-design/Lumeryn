@@ -122,5 +122,15 @@
 ## 13. 보강 검토 보고서
 
 - 리뷰: [FOUNDATION_REVIEW_2026-11-18.md](FOUNDATION_REVIEW_2026-11-18.md)
-- 현재 보강 브랜치는 PR #2에서 검증 중이다. 완료 상태는 검증 결과와 병합 후 확정한다.
+- PR #2는 커밋 `5b259ea468e291b44c071eaa343345a915a53c64`로 `main`에 병합되었다. [Main CI](https://github.com/scarlel96-design/Lumeryn/actions/runs/44224806143)가 PASS임을 확인했다.
 - WO-AGENT-00은 실제 PC에서 아직 실행하지 않았다.
+
+## 14. 보강 PR 병합 확정 (2026-11-18)
+
+- PR: https://github.com/scarlel96-design/Lumeryn/pull/2 — **MERGED**.
+- 최종 기본 브랜치 커밋: `5b259ea468e291b44c071eaa343345a915a53c64`.
+- PR CI: https://github.com/scarlel96-design/Lumeryn/actions/runs/44224672008 — **PASS (Windows/Ubuntu)**.
+- Main CI: https://github.com/scarlel96-design/Lumeryn/actions/runs/44224806143 — **PASS (Windows/Ubuntu)**.
+- 이 PASS는 개발 문서·모델/모듈/정책 메타데이터·정적 아키텍처 검사·오프라인 단위 테스트에만 해당한다.
+- 사용자 PC의 세 AI CLI, GPU, Qwen 추론, 비전, Win11 UI 실기 검증은 **NOT_RUN**.
+- **M0 / WO-AGENT-00: READY 유지.** 다음 실제 작업은 사용자 PC 기반의 CLI·권한·Worktree 검증이다.

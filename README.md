@@ -68,7 +68,7 @@ py -3.12 -m unittest discover -s tests -v
 
 정식 프로그램의 동작 여부, GPU 성능, 세 CLI의 실제 인증·연동 결과는 아직 검증되지 않았습니다.
 
-## Foundation hardening (planned integration)
+## Foundation hardening (merged)
 
 개발 장기 운영·품질 게이트 보강 내용은 별도 PR에서 검증한다.
 - [보안 위협 모델](docs/SECURITY_MODEL.md)
@@ -80,3 +80,7 @@ py -3.12 -m unittest discover -s tests -v
 정적 계약·메타데이터 검증은 실제 AI 기능 구현 또는 모델 학습이 아니다.
 
 [기초 설계·코드 점검 및 보강 보고서](docs/FOUNDATION_REVIEW_2026-11-18.md)
+
+- [보강 PR #2](https://github.com/scarlel96-design/Lumeryn/pull/2)는 검증 후 `main`에 병합되었습니다.
+- [Windows + Ubuntu CI 결과](https://github.com/scarlel96-design/Lumeryn/actions/runs/44224806143)는 PASS입니다.
+- **실제 Qwen 모델/검색/Windows 앱/CLI 연동 테스트는 아직 실행하지 않았습니다.**
