@@ -9,6 +9,9 @@ description = "Lumeryn architecture scaffold — not an AI runtime yet"
 requires-python = ">=3.12"
 dependencies = []
 
+[project.optional-dependencies]
+dev = ["jsonschema>=4.23,<5"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
