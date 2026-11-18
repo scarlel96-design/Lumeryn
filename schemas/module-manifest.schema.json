@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/lumeryn/module-manifest.schema.json",
+  "title": "Lumeryn module manifest v1 (design contract; no executable plugin loader)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "module_id",
+    "version",
+    "kind",
+    "capabilities",
+    "compatible_core",
+    "permissions",
+    "resources",
+    "activation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "module_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$",
+      "maxLength": 128
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-zA-Z0-9.-]+)?$"
+    },
+    "kind": {
+      "enum": [
+        "tool",
+        "lora",
+        "specialist_model"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z][a-z0-9_]*)+$"
+      }
+    },
+    "compatible_core": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network",
+        "filesystem",
+        "subprocess"
+      ],
+      "properties": {
+        "network": {
+          "enum": [
+            "none",
+            "public_read",
+            "approved_hosts"
+          ]
+        },
+        "filesystem": {
+          "enum": [
+            "none",
+            "read_user_selected",
+            "sandbox_write"
+          ]
+        },
+        "subprocess": {
+          "type": "boolean"
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requires_gpu",
+        "memory_mb_limit"
+      ],
+      "properties": {
+        "requires_gpu": {
+          "type": "boolean"
+        },
+        "memory_mb_limit": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 1048576
+        }
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_enabled",
+        "lazy_load"
+      ],
+      "properties": {
+        "default_enabled": {
+          "type": "boolean"
+        },
+        "lazy_load": {
+          "type": "boolean"
+        }
+      }
+    },
+    "base_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "entrypoint": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "lora"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "base_model"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "tool"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "entrypoint"
+        ]
+      }
+    }
+  ]
+}

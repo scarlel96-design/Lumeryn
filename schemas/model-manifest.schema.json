@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lumeryn model version manifest — metadata only",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "model_id",
+    "role",
+    "base_model",
+    "source_uri",
+    "revision",
+    "weights_sha256",
+    "tokenizer_revision",
+    "vision_processor_revision",
+    "runtime",
+    "capabilities",
+    "verified"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1"
+    },
+    "model_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.-]{2,100}$"
+    },
+    "role": {
+      "enum": [
+        "ORIGINAL",
+        "DEV",
+        "STABLE",
+        "PROPOSED"
+      ]
+    },
+    "base_model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_uri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "weights_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "tokenizer_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "vision_processor_revision": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "runtime": {
+      "enum": [
+        "ollama",
+        "transformers",
+        "vllm",
+        "UNSELECTED"
+      ]
+    },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "text",
+          "vision",
+          "tool_calling",
+          "embedding",
+          "reranking"
+        ]
+      }
+    },
+    "verified": {
+      "type": "boolean"
+    },
+    "benchmark_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "role": {
+            "const": "STABLE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "verified": {
+            "const": true
+          },
+          "weights_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "benchmark_id"
+        ]
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ Read `docs/MASTER_PLAN.md` and `docs/PROJECT_STATE.md` before any WO. A listed W
 | Order | WO | Lead | Parallel support | Dependency | Deliverable |
 |---:|---|---|---|---|---|
 | 1 | WO-AGENT-00 | Codex | Grok+Antigravity (conditional) | Blueprint | CLI/worktree/permissions verification |
-| 2 | WO-AGENT-01 | Codex | Grok implement, Antigravity review | AGENT-00 | Dispatcher/usage tracker |
+| 2 | WO-AGENT-01 | Codex | Grok implement, Antigravity review | AGENT-00 | Dispatcher/usage tracker (DRAFT until AGENT-00 GO) |
 | 3 | WO-01 | Codex | Antigravity | M0 | Hardware report |
 | 4 | WO-02 | Codex | Antigravity | WO-01 | Original Qwen evaluation |
 | 5 | WO-03 | Codex | Grok | WO-02 | Clean skeleton and CI hardening |
@@ -44,3 +44,11 @@ Read `docs/MASTER_PLAN.md` and `docs/PROJECT_STATE.md` before any WO. A listed W
 | 38 | REL-03 | Codex | Read-only reviews | REL-02 | Updater/rollback |
 
 The master plan and each detailed WO own final scope. The roadmap alone does not authorize code changes.
+
+## Long-term gates (v1.1)
+
+- `WO-AGENT-01` has a **DRAFT** specification. It cannot start until WO-AGENT-00 is GO.
+- Every WO must run the design-document check and include a start report with `master_sha256`.
+- Core/import architecture guard and JSON handoff/module validation are part of the initial CI.
+- Search/model/GUI/CLI hardware tests must remain NOT_RUN until executed.
+- Technical risk controls: [Security](SECURITY_MODEL.md), [Data](DATA_GOVERNANCE.md), [Modules](MODULE_CONTRACTS.md).

@@ -19,3 +19,26 @@ This is the initial traceability map. The master plan contains detailed P0/P1/P2
 | Model/update rollback | REL-01~03 | Recovery tests | NOT_RUN |
 
 Add new requirements together with the associated WO and acceptance evidence. Never mark a requirement complete solely from document existence.
+
+## Foundation quality requirements (v1.1)
+
+| Requirement | Evidence location | Status |
+|---|---|---|
+| GOV-01: master chapters ordered and WO file exists | `scripts/verify_project.py`, CI | CI_VALIDATION_REQUIRED |
+| GOV-02: reports must refer to current master hash | `scripts/validate_contracts.py`, schema | CI_VALIDATION_REQUIRED |
+| ARCH-01: domain/application import boundary | `scripts/check_architecture.py` | CI_VALIDATION_REQUIRED |
+| MOD-05: module metadata contract | `schemas/module-manifest.schema.json`, example | METADATA_ONLY |
+| SEC-01..12: trust boundaries and sandbox policy | `docs/SECURITY_MODEL.md` | DESIGN_ONLY |
+| DATA-01: candidate/approved/eval separation | `docs/DATA_GOVERNANCE.md` | DESIGN_ONLY |
+| GOV-03: Windows+Linux offline CI | `.github/workflows/ci.yml` | CI_VALIDATION_REQUIRED |
+| GOV-04: continuation and draft next WO | `docs/OPERATIONS_AND_STATE.md`, WO-AGENT-01 | DRAFT |
+
+## 추가 검증 경계
+
+| 요구 | 관련 산출물 | 현재 상태 |
+|---|---|---|
+| MODEL-05: model manifest | `schemas/model-manifest.schema.json` | METADATA_ONLY |
+| POL-04: policy rule schema | `schemas/policy-rule.schema.json` | METADATA_ONLY |
+| UI-09: Win11 + Apple HIG 실측 | `docs/UI_SPEC.md` | NOT_RUN |
+| PERF-01: 리소스·검색 호출 예산 | `docs/PERFORMANCE_BUDGET.md` | DESIGN_ONLY |
+| GOV-05: 문서 상대 링크·순환 import | CI, `scripts/check_docs_links.py` | CI_VALIDATION_REQUIRED |

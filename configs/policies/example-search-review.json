@@ -1,0 +1,17 @@
+{
+  "schema_version": "1",
+  "policy_id": "SEARCH_REVIEW_EXAMPLE",
+  "version": 1,
+  "enabled": false,
+  "scope": "search",
+  "priority": 100,
+  "decision": "REVIEW",
+  "conditions": [
+    {
+      "attribute": "source_status",
+      "operator": "eq",
+      "value": "unverified"
+    }
+  ],
+  "reason": "Illustrative rule only. No runtime engine applies this file."
+}

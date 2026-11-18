@@ -1,0 +1,25 @@
+{
+  "schema_version": "1",
+  "module_id": "lumeryn.math",
+  "version": "0.0.0",
+  "kind": "tool",
+  "description": "Metadata-only example. No executable module is provided.",
+  "capabilities": [
+    "math.calculate"
+  ],
+  "compatible_core": ">=0.1,<1",
+  "permissions": {
+    "network": "none",
+    "filesystem": "none",
+    "subprocess": false
+  },
+  "resources": {
+    "requires_gpu": false,
+    "memory_mb_limit": 128
+  },
+  "activation": {
+    "default_enabled": false,
+    "lazy_load": true
+  },
+  "entrypoint": "NOT_IMPLEMENTED"
+}

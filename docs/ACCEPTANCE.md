@@ -36,3 +36,11 @@ An offline documentation test is not a substitute for these checks.
 ## Benchmarks
 
 Baseline model, baseline-plus-retrieval and trained-model-plus-retrieval must run on the same test set. The 500-question dataset and target thresholds are proposals until measured.
+
+## Foundation hardening gate
+
+- Verify ordered numbered master chapters, required documents and current WO.
+- Run the offline package/architecture/JSON contract tests on Windows and Ubuntu.
+- Reject handoff records with stale master SHA, malformed fields or unsupported COMPLETED claims.
+- Reject invalid module manifests; do not infer module sandbox safety from schema compliance.
+- Treat GitHub CI PASS as code/document baseline only; native Windows 11 UI, GPU, actual AI CLIs and internet retrieval remain separately gated.

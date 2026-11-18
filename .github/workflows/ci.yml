@@ -9,18 +9,39 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: foundation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  docs-and-contracts:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+  architecture-and-contracts:
+    name: architecture-and-contracts (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # verified checkout v5 commit
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # verified setup-python v6 commit
         with:
           python-version: "3.12"
-      - name: Verify mandatory project documents
+      - name: Install package and test-only schema validator
+        run: python -m pip install -e ".[dev]"
+      - name: Verify required design records
         run: python scripts/verify_project.py check --wo WO-AGENT-00
-      - name: Compile Python files
+      - name: Verify architecture boundaries
+        run: python scripts/check_architecture.py
+      - name: Verify module example manifest
+        run: python scripts/validate_contracts.py module plugins/examples/math-tool/manifest.json
+      - name: Verify proposed model manifest
+        run: python scripts/validate_contracts.py model configs/models/qwen35-4b-proposed.json
+      - name: Verify disabled policy example
+        run: python scripts/validate_contracts.py policy configs/policies/example-search-review.json
+      - name: Check internal Markdown file links
+        run: python scripts/check_docs_links.py
+      - name: Compile source and test files
         run: python -m compileall -q src scripts tests
-      - name: Run unit tests (no external services)
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Run offline unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v

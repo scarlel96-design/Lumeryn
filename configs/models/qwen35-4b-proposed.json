@@ -1,0 +1,19 @@
+{
+  "schema_version": "1",
+  "model_id": "qwen3.5-4b-proposed",
+  "role": "PROPOSED",
+  "base_model": "Qwen/Qwen3.5-4B",
+  "source_uri": "https://huggingface.co/Qwen/Qwen3.5-4B",
+  "revision": null,
+  "weights_sha256": null,
+  "tokenizer_revision": null,
+  "vision_processor_revision": null,
+  "runtime": "UNSELECTED",
+  "capabilities": [
+    "text",
+    "vision",
+    "tool_calling"
+  ],
+  "verified": false,
+  "benchmark_id": null
+}
